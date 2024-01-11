@@ -60,7 +60,7 @@ def read_users_file():
             names.append(users[i]) # even index numbers are stored as names
 
         else:
-            passwords.append(users[i])   # odd index numbers are stored as passwords
+            passwords.append(users[i]) # odd index numbers are stored as passwords
             
     return names, passwords
 
@@ -141,18 +141,24 @@ e - exit
         print('------------------------------------')
         names, passwords = read_users_file()
         user_added = False
+
         while user_added == False:
             user_name = input('Enter user name: ')
+
             if user_name.isalpha() == False: # Checks that name contains only letters
                 '''Source: https://careerkarma.com/blog/python-isalpha-isnumeric-isalnum/#:~:text=The%20Python%20isalpha()%20method,contains%20alphanumeric%20characters%2C%20without%20symbols.'''
                 print("No numbers allowed! Please add a correct name")
+
             elif user_name in names:
                 print("This user name already exists! Please try again")
+
             else:
                 pass1 = input('Enter password: ')
                 pass2 = input("repeat password: ")
+
                 if pass2 != pass1:
                     print("Passwords don't match! Please try again\n")
+
                 else:
                     with open('user.txt', 'a+') as f:
                         f.write(" " + user_name + ", " + pass2)
@@ -167,42 +173,61 @@ e - exit
         print('Assign a new task:')
         print('------------------------------------')
         print('Please add the following task details:')
+
         t_owner_exists = False
         names, passwords = read_users_file()
+
         while t_owner_exists == False:
             print(f"Assign task to: {names}") # Shows available users registered
             t_owner = input("Select task owner: ")
+
             if t_owner in names:
                 t_owner_exists = True
+
             else:
                 print("Task owner does not exist in the system! Please try again")
+
+
         title_ok = False
+
         while title_ok == False:
             t_title = input("Task name: ")
+
             if len(t_title) > 25:
                 print("Too long! Please add a title less than 25 characters")
+
             else:
                 title_ok = True
+
         descrip_ok = False
+
         while descrip_ok == False:
             t_descrip = input("Task description:\n")
+
             if len(t_descrip) > 100:
                 print("Too long! Please add a description less than 100 characters!")
+
             else:
                 descrip_ok = True
+
         '''This code block checks that the date is entered in the right format
         I had to Google this - source: https://www.geeksforgeeks.org/python-validate-string-date-format/'''
         date_ok = False
+
         while date_ok == False:
             format = "%d %b %Y"
             t_due_date = input("Due date (dd mmm yyyy): ")
+
             try:
                 date_ok = bool(datetime.strptime(t_due_date, format)) 
+
             except ValueError:
                 print("Wrong date format! Please add a correct date in the format (dd Mmm yyyy)")
+
             if t_due_date < calc_date():
                 print("Due date cannot be in the past! Please add another date.")
                 date_ok = False
+
         with open('tasks.txt', 'a+') as file:
             file.write('\n')
             file.write(t_owner + ", " + t_title + ", " + t_descrip + ", " + t_due_date + ", " + calc_date() + ", No")
@@ -216,9 +241,11 @@ e - exit
          show them on the terminal'''
         if check_tasks() == False: #Checks if file is empty or doesn't exist
             print("No tasks stored! Please add a task first\n")
+
         else:
             with open('tasks.txt', 'r') as f:
                 lines = f.readlines()
+
             for line in lines:
                 task = line.split(", ")
                 print("__________________________________________________________\n")
@@ -236,12 +263,16 @@ e - exit
         show the ones assigned to the logged in user on the terminal'''
         if check_tasks() == False:
             print("No tasks stored! Please add a task first\n") #Checks if file is empty or doesn't exist
+
         else:
             with open('tasks.txt', 'r') as f:
                 lines = f.readlines()
+       
         t_count = 0
+
         for line in lines:
             task = line.split(", ")
+
             if task[0] == logged_user:
                 t_count += 1
                 print("__________________________________________________________\n")
@@ -252,11 +283,13 @@ e - exit
                 print(f"Task complete?:\t\t No")
                 print(f"Task description: \n {task[2]}\n")
                 print("__________________________________________________________\n")
+
         if t_count == 0:
             print(f"No tasks assigned to {logged_user}!\n")
 
     elif menu == 'st':
         names, passwords = read_users_file()
+
         with open('tasks.txt', 'r+') as f:
             lines = f.readlines()
         print('------------------------------------')
