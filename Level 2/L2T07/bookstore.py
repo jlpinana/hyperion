@@ -33,34 +33,20 @@ def welcome(option):
         print("===========================")
 
     elif option == 1:
-        print("\n----------------------------")
-        print("====> Menu: Enter book <====")
-        print("----------------------------")
-        print("")
-
-    elif option == 2:
-        print("\n----------------------------")
-        print("====> Menu: Update book <====")
-        print("-----------------------------")
-        print("")
-
-    elif option == 3:
         print("\n------------------------------")
         print("====> Update book details <====")
         print("-------------------------------")
         print("")
 
-    elif option == 4:
-        print("\n----------------------------")
-        print("====> Menu: Delete Book <====")
-        print("-----------------------------")
-        print("")
 
-    elif option == 5:
-        print("\n----------------------------")
-        print("====> Menu: Search Book <====")
-        print("-----------------------------")
-        print("")
+def menu_message(option):
+    '''Displays user messages for each menu selected'''
+    menu = [0, 'Enter', 'Update', 'Delete', 'Search']
+
+    print("\n----------------------------------")
+    print(f"====> Menu: {menu[option]} book <====")
+    print("----------------------------------")
+    print("")
 
 
 def create_object(row_id):
@@ -158,7 +144,7 @@ while True:
 : '''))
         
         if menu == 1: # Enter book
-            welcome(1)
+            menu_message(menu)
 
             row = cursor.lastrowid
             new_book = create_object(row)
@@ -168,7 +154,7 @@ while True:
         
 
         elif menu == 2: # Update book
-            welcome(2)
+            menu_message(menu)
             found = False
 
             '''Check that the book exists in the database'''
@@ -188,7 +174,7 @@ while True:
                 record_id = int(input("Select the id # of the book you want to update: "))
                 valid_id = id_check(records_found, record_id)
 
-            welcome(3)
+            welcome(1)
 
             book_update = create_object(record_id)
             book_update.add_book()
@@ -197,7 +183,7 @@ while True:
                 
 
         elif menu == 3: # Delete book
-            welcome(4)
+            menu_message(menu)
             found = False
 
             '''Check that the book exists in the database'''
@@ -237,7 +223,7 @@ while True:
                     print("Wrong option! Please select Y/N")
 
         elif menu == 4: # Search books
-            welcome(5)
+            menu_message(menu)
             found = False
 
             while found == False:
